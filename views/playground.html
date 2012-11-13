@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}Contacts suggestions{% endblock %}
+
+{% block body %}
+
+		<div class="gr ptxl">
+			<div class="gu gu-1of3">&nbsp;</div>
+			<div class="gu gu-1of3">
+			
+				<ul class="nav nav-tabs mbxl">
+					<li {% if !async %}class="active"{% endif %}><a href="/sync">Sync</a></li>
+					<li {% if  async %}class="active"{% endif %}><a href="/async">Async</a></li>
+				</ul>
+			
+				<h3 class="subh-alt ptxs pbxs">Les connaissez-vous ?</h3>
+				<ul class="divider-before no-padding">
+				
+				{% for suggestion in suggestions %}
+				
+					<li class="divider-after rc pam">
+						<div class="gr">
+							<div class="gu gu-4of5">
+								<img 
+									width="40" 
+									height="40" 
+									class="img avatar" 
+									src="http://viadeo.github.com/tetra-ui/img/avatars/avatar-n-40x40.png" 
+								/>
+								<span class="bd plm">
+									<h5 class="pbxs mbxs"><a href="/">{{suggestion.fullName}}</a></h5>
+									<p class="title pbxs mbxs">{{suggestion.headline}}</p>
+									<a class="btn btn-primary add-to-contact" title="Add to my contacts" data-user-id="{{suggestion.userId}}">Ajouter &agrave; mes contacts</a>
+								</span>
+							</div>
+							<div class="gu gu-last tar">
+								<span class="tooltip tooltip-right">
+									<i class="vicon pointer remove-from-suggestion" data-user-id="{{suggestion.userId}}">&times;</i>
+									<span class="tooltip-content">Ne plus proposer</span>
+								</span>
+							</div>
+						</div>
+					</li>
+					
+				{% endfor %}
+				
+				</ul>
+			</div>
+			<div class="gu gu-last">&nbsp;</div>
+		</div>
+		
+		{% include 'async-scripts.html' %}
+		{% include 'sync-scripts.html' %}
+
+{% endblock %}
