@@ -42,18 +42,20 @@ app.configure('production', function(){
 
 generateSuggestion = function(length){
 	var 
-		firstnames = ['Jean', 'Jacques', 'Pierre', 'Matthieu','Philippe', 'Barthelemy', 'Andre'],
-		lastnames  = ['Roro', 'Hinhin', 'Coucou', 'Nonmais', 'Bahouais', 'Zyva', 'Pasdrole', 'Paetrus'],
-		headlines  = ['Glandeur agree', 'Je sais plus', 'Mr Oizo']
+		firstnames	= ['Jean', 'Jacques', 'Pierre', 'Matthieu','Philippe', 'Barthelemy', 'Andre'],
+		lastnames	= ['Roro', 'Hinhin', 'Coucou', 'Nonmais', 'Bahouais', 'Zyva', 'Pasdrole', 'Paetrus'],
+		headlines	= ['Glandeur agree', 'Je sais plus', 'Mr Oizo'],
+		colors		= ['beige', 'whitesmoke', 'lavender', 'lavenderblush', 'honeydew', 'ghostwhite', 'bisque']
 	;
 	
 	var array = [];
 	
 	while(length--){
 		array.push({
-			fullName : firstnames[Math.floor(Math.random()*firstnames.length)] + " " + lastnames[Math.floor(Math.random()*lastnames.length)],
-			headline : headlines[Math.floor(Math.random()*headlines.length)],
-			userId : crypto.createHash('sha1').digest('hex')
+			fullName	: firstnames[Math.floor(Math.random()*firstnames.length)] + " " + lastnames[Math.floor(Math.random()*lastnames.length)],
+			headline 	: headlines[Math.floor(Math.random()*headlines.length)],
+			userId		: crypto.createHash('sha1').digest('hex'),
+			color		: colors[Math.floor(Math.random()*colors.length)]
 		});
 	};
 	
