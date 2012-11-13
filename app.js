@@ -40,7 +40,7 @@ app.configure('production', function(){
 
 //
 
-generateSuggestion = function(length){
+function generateSuggestion(length){
 	var 
 		firstnames	= ['Jean', 'Jacques', 'Pierre', 'Matthieu','Philippe', 'Barthelemy', 'Andre'],
 		lastnames	= ['Roro', 'Hinhin', 'Coucou', 'Nonmais', 'Bahouais', 'Zyva', 'Pasdrole', 'Paetrus'],
@@ -48,18 +48,24 @@ generateSuggestion = function(length){
 		colors		= ['beige', 'whitesmoke', 'lavender', 'lavenderblush', 'honeydew', 'ghostwhite', 'bisque']
 	;
 	
-	var array = [];
+	var suggestions = {};
 	
 	while(length--){
-		array.push({
-			fullName	: firstnames[Math.floor(Math.random()*firstnames.length)] + " " + lastnames[Math.floor(Math.random()*lastnames.length)],
-			headline 	: headlines[Math.floor(Math.random()*headlines.length)],
-			userId		: crypto.createHash('sha1').digest('hex'),
-			color		: colors[Math.floor(Math.random()*colors.length)]
-		});
+		(function(){
+			var
+				fullName	= firstnames[Math.floor(Math.random()*firstnames.length)] + " " + lastnames[Math.floor(Math.random()*lastnames.length)],
+				userId		= crypto.createHash('sha1').update(fullName).digest('hex')
+			;
+			suggestions[userId] = {
+				fullName	: fullName,
+				headline 	: headlines[Math.floor(Math.random()*headlines.length)],
+				userId		: userId,
+				color		: colors[Math.floor(Math.random()*colors.length)]
+			};
+		}())
 	};
 	
-	return array;
+	return suggestions;
 	
 }
 
@@ -71,6 +77,13 @@ app.get('/sync', function(req, res) {
 
 app.get('/async', function(req, res) {
 	res.render('playground.html', {suggestions : generateSuggestion(3), async : true});
+});
+
+app.get('/suggestions', function(req, res) {
+	res.json({
+		status : "SUCCESS",
+		data : generateSuggestion(3)
+	});
 });
 
 
