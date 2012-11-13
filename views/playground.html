@@ -24,7 +24,7 @@
 								<img 
 									width="40" 
 									height="40" 
-									class="img avatar" 
+									class="img avatar pointer" 
 									src="http://viadeo.github.com/tetra-ui/img/avatars/avatar-n-40x40.png" 
 									style="background-color:{{suggestion.color}};"
 								/>
@@ -50,7 +50,10 @@
 			<div class="gu gu-last">&nbsp;</div>
 		</div>
 		
-		{% include 'async-scripts.html' %}
-		{% include 'sync-scripts.html' %}
+		{% if async %} 
+		<script src="/js/async.js"></script>
+		{% else %} 
+		<script src="/js/sync.js"></script>
+		{% endif %}
 
 {% endblock %}
