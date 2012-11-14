@@ -153,7 +153,6 @@ tetra.view.register('suggestions list', {
 						window.setTimeout(function(){target.slideUp('slow', function(){target.remove();});}, me.confirmationLifeTime);
 					});
 					
-					
 				},
 				
 				'hide contact suggestion' : function(params){

@@ -41,11 +41,12 @@ app.configure('production', function(){
 //
 
 function generateSuggestion(length){
+
 	var 
-		firstnames	= ['Jean', 'Jacques', 'Pierre', 'Matthieu','Philippe', 'Barthelemy', 'Andre'],
-		lastnames	= ['Roro', 'Hinhin', 'Coucou', 'Nonmais', 'Bahouais', 'Zyva', 'Pasdrole', 'Paetrus'],
+		firstnames	= ['Jean', 'Jacques', 'Pierre', 'Matthieu','Philippe', 'Barthelemy', 'Andre', 'Mr.', 'M.'],
+		lastnames	= ['Roro', 'Hinhin', 'Coucou', 'Nonmais', 'Bahouais', 'Zyva', 'Pasdrole', 'Paetrus', 'Tetris'],
 		headlines	= ['Glandeur agree', 'Je sais plus', 'Mr Oizo'],
-		colors		= ['beige', 'whitesmoke', 'lavender', 'lavenderblush', 'honeydew', 'ghostwhite', 'bisque']
+		colors		= ['beige', 'whitesmoke', 'lavender', 'lavenderblush', 'honeydew', 'ghostwhite', 'bisque', 'lavender', 'beige']
 	;
 	
 	var suggestions = {};
@@ -72,7 +73,12 @@ function generateSuggestion(length){
 
 // Routes
 
+app.get('/', function(req, res) {
+	res.redirect('/sync');
+});
+
 app.get('/sync', function(req, res) {
+	var suggestions
 	res.render('playground.html', {suggestions : generateSuggestion(3), async : false});
 });
 
@@ -82,7 +88,7 @@ app.get('/async', function(req, res) {
 
 // rest services
 
-var delay = 1000; // ms
+var delay = 2000; // ms
 
 app.get('/r/suggestions', function(req, res) {
 	setTimeout(function(){
