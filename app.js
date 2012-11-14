@@ -57,6 +57,7 @@ function generateSuggestion(length){
 				userId		= crypto.createHash('sha1').update(fullName).digest('hex')
 			;
 			suggestions[userId] = {
+				userId		: userId,
 				fullName	: fullName,
 				headline 	: headlines[Math.floor(Math.random()*headlines.length)],
 				userId		: userId,
@@ -79,11 +80,35 @@ app.get('/async', function(req, res) {
 	res.render('playground.html', {suggestions : generateSuggestion(3), async : true});
 });
 
-app.get('/suggestions', function(req, res) {
-	res.json({
-		status : "SUCCESS",
-		data : generateSuggestion(3)
-	});
+// rest services
+
+var delay = 800; // ms
+
+app.get('/r/suggestions', function(req, res) {
+	setTimeout(function(){
+		res.json({
+			status : "SUCCESS",
+			data : generateSuggestion(3)
+		});
+	}, delay);
+});
+
+app.del('/r/suggestions', function(req, res) {
+	setTimeout(function(){
+		res.json({
+			status : "SUCCESS",
+			data : generateSuggestion(1)
+		});
+	}, delay);
+});
+
+app.post('/r/contacts', function(req, res){
+	setTimeout(function(){
+		res.json({
+			status : "SUCCESS",
+			data : generateSuggestion(1)
+		});
+	}, delay);
 });
 
 
