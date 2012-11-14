@@ -71,24 +71,28 @@ function generateSuggestion(length){
 	
 }
 
+
+var servicesDelay = 1200;
+var keys = {
+	fullName 	: '{%=fullName %}',
+	userId 		: '{%=userId %}',
+	color 		: '{%=color %}',
+	headline 	: '{%=headline %}'
+};
+
 // Routes
 
-app.get('/', function(req, res) {
-	res.redirect('/sync');
-});
+app.get('/', function(req, res) { res.redirect('/sync'); });
 
 app.get('/sync', function(req, res) {
-	var suggestions
-	res.render('playground.html', {suggestions : generateSuggestion(3), async : false});
+	res.render('playground.html', {suggestions : generateSuggestion(3), async : false, delay : servicesDelay, keys : keys});
 });
 
 app.get('/async', function(req, res) {
-	res.render('playground.html', {suggestions : generateSuggestion(3), async : true});
+	res.render('playground.html', {suggestions : generateSuggestion(3), async : true, delay : servicesDelay, keys : keys});
 });
 
 // rest services
-
-var delay = 2000; // ms
 
 app.get('/r/suggestions', function(req, res) {
 	setTimeout(function(){
@@ -96,25 +100,23 @@ app.get('/r/suggestions', function(req, res) {
 			status : "SUCCESS",
 			data : generateSuggestion(10)
 		});
-	}, delay);
+	}, servicesDelay);
 });
 
 app.del('/r/suggestions', function(req, res) {
 	setTimeout(function(){
 		res.json({
-			status : "SUCCESS"//,
-			//data : generateSuggestion(1)
+			status : "SUCCESS"
 		});
-	}, delay);
+	}, servicesDelay);
 });
 
 app.post('/r/contacts', function(req, res){
 	setTimeout(function(){
 		res.json({
-			status : "SUCCESS"//,
-			//data : generateSuggestion(1)
+			status : "SUCCESS"
 		});
-	}, delay);
+	}, servicesDelay);
 });
 
 
