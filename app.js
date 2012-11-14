@@ -82,7 +82,7 @@ app.get('/async', function(req, res) {
 
 // rest services
 
-var delay = 800; // ms
+var delay = 1000; // ms
 
 app.get('/r/suggestions', function(req, res) {
 	setTimeout(function(){
@@ -96,8 +96,8 @@ app.get('/r/suggestions', function(req, res) {
 app.del('/r/suggestions', function(req, res) {
 	setTimeout(function(){
 		res.json({
-			status : "SUCCESS",
-			data : generateSuggestion(1)
+			status : "SUCCESS"//,
+			//data : generateSuggestion(1)
 		});
 	}, delay);
 });
@@ -105,8 +105,8 @@ app.del('/r/suggestions', function(req, res) {
 app.post('/r/contacts', function(req, res){
 	setTimeout(function(){
 		res.json({
-			status : "SUCCESS",
-			data : generateSuggestion(1)
+			status : "SUCCESS"//,
+			//data : generateSuggestion(1)
 		});
 	}, delay);
 });
