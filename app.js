@@ -88,7 +88,7 @@ app.get('/r/suggestions', function(req, res) {
 	setTimeout(function(){
 		res.json({
 			status : "SUCCESS",
-			data : generateSuggestion(3)
+			data : generateSuggestion(10)
 		});
 	}, delay);
 });

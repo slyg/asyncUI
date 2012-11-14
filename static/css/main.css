@@ -5,4 +5,4 @@
 .growl-keeper {position: absolute; top: 0; left: 0; text-align: 0; width: 100%;}
 .growl-alert {text-align: center; background-color: #ccc; padding: 10px 0;}
 .growl-text {margin: 0;}
-.confirm-addition {background-color: #F7F9FA;}
+.confirm-addition {background-color: #F7F9FA; padding: 45px 0 44px 0;}
