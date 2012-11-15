@@ -4,37 +4,34 @@
 
 {% block body %}
 
-		<div class="gr paxl">
-			<div class="gu gu-1of3" id="suggested-contacts">
+		<div id="suggested-contacts" class="paxl mtl">
+		
+			<h1>Sync vs Async UI <span id="loading" style="display:none;">.</span></h1>
 			
-				<h1>Sync vs Async UI</h1>
-				
-				<p class="pbxl">
-					Same view, same webservice, different controllers' behavior. 
-					Notice that async has no loading state. 
-					Network delay is fixed at <code>{{ delay }}ms</code>.
-				</p>
+			<p class="pbxl">
+				Same view, same webservice, different controllers' behavior. 
+				Notice that async has no loading state. 
+				Network latency is fixed at <code>{{ delay }}ms</code>.
+			</p>
+		
+			<ul class="nav nav-tabs mbxl">
+				<li {% if  async %}class="active"{% endif %}><a href="/async">Async</a></li>
+				<li {% if !async %}class="active"{% endif %}><a href="/sync">Sync</a></li>
+			</ul>
+		
+			<h3 class="subh-alt ptxs pbxs">Les connaissez-vous ?</h3>
+			<ul class="contact-list divider-before no-padding">
+			{% for suggestion in suggestions %}
+				{% include 'suggestion.html' with suggestion %}
+			{% endfor %}
+			</ul>
 			
-				<ul class="nav nav-tabs mbxl">
-					<li {% if !async %}class="active"{% endif %}><a href="/sync">Sync</a></li>
-					<li {% if  async %}class="active"{% endif %}><a href="/async">Async</a></li>
-				</ul>
-			
-				<h3 class="subh-alt ptxs pbxs">Les connaissez-vous ?</h3>
-				<ul class="divider-before no-padding">
-				{% for suggestion in suggestions %}
-					{% include 'suggestion.html' %}
-				{% endfor %}
-				</ul>
-				
-			</div>
 		</div>
 		
 		<script src="/js/models.js"></script>
 		<script src="{% if async %}/js/async-ctrl.js{% else %}/js/sync-ctrl.js{% endif %}"></script>
 		<script src="/js/view.js"></script>
-		<script type="text/html">
-			{% include 'suggestion.html' with keys %}
-		</script>
+		<script type="text/html" id="tmpl_suggestItem">{% include 'suggestion.html' with keys %}</script>
+		<script>$("#loading").ajaxStart(function(){ $(this).show(); }).ajaxStop(function(){ $(this).hide(); });</script>
 		
 {% endblock %}

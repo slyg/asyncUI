@@ -55,7 +55,7 @@ function generateSuggestion(length){
 		(function(){
 			var
 				fullName	= firstnames[Math.floor(Math.random()*firstnames.length)] + " " + lastnames[Math.floor(Math.random()*lastnames.length)],
-				userId		= crypto.createHash('sha1').update(fullName).digest('hex')
+				userId		= crypto.createHash('sha1').update(fullName + Math.random()).digest('hex')
 			;
 			suggestions[userId] = {
 				userId		: userId,
@@ -72,7 +72,7 @@ function generateSuggestion(length){
 }
 
 
-var servicesDelay = 1200;
+var servicesDelay = 1500;
 var keys = {
 	fullName 	: '{%=fullName %}',
 	userId 		: '{%=userId %}',
@@ -82,7 +82,7 @@ var keys = {
 
 // Routes
 
-app.get('/', function(req, res) { res.redirect('/sync'); });
+app.get('/', function(req, res) { res.redirect('/async'); });
 
 app.get('/sync', function(req, res) {
 	res.render('playground.html', {suggestions : generateSuggestion(3), async : false, delay : servicesDelay, keys : keys});

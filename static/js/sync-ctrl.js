@@ -12,6 +12,8 @@ tetra.controller.register('suggestions controller', {
 			
 				'add contact' : function(params){ 
 				
+					if(me.itemHasExpired(params.userId)) return false;
+				
 					// send request to server
 					orm('contact').create({ userId : params.userId }).save();
 					
@@ -22,6 +24,8 @@ tetra.controller.register('suggestions controller', {
 				
 				'remove from suggestions' : function(params){ 
 				
+					if(me.itemHasExpired(params.userId)) return false;
+				
 					// send request to server
 					orm('suggestion').create({ userId : params.userId }).remove();
 					
@@ -30,25 +34,21 @@ tetra.controller.register('suggestions controller', {
 					
 				},
 				
-				'cache some suggested contacts' : function(){ orm('suggestion').fetch({}); }
+				'add some suggested contacts to the cache' : function(){ orm('suggestion').fetch({}); }
 				
 			},
 			
 			model : {
-				
 				'contact' : {
-					'save'		: function(obj){  },
-					'saved'		: function(obj){ 
-						me.manageStack();
+					'saved'	: function(obj){ 
+						me.manageSuggestionsStack();
 						app.notify('show contact adding sent', { userId : obj.get('userId') }); 
 					}
 				},
-				
 				'suggestion' : {
-					'delete'	: function(obj){  },
 					'append'	: function(col){ me.suggestionsStack = me.suggestionsStack.concat(col); },
 					'deleted'	: function(obj){
-						me.manageStack();
+						me.manageSuggestionsStack();
 						// ask view to remove contact suggestion
 						app.notify('hide contact suggestion', { userId : obj.get('userId') });
 					},
@@ -62,21 +62,48 @@ tetra.controller.register('suggestions controller', {
 			init : function(){
 				
 				me.suggestionsStack = [];
+				me.expiredItems		= {};
 				
-				me.currentIserId = '';
-				
-				me.manageStack = function(){
+				me.manageSuggestionsStack = function(){
 					
-					// When new contact to be added,
-					// add a new item from suggestions stack to the view,
-					// and remove it from the stack
+					// When new contact suggestion has to be added to the view,
+						// if suggestions stack ist empty fetch, then Render
+						// else Render immediately
+					
+					if (me.suggestionsStack.length == 0) {
+						orm('suggestion').fetch({}, me.renderSuggestion);
+					} else {
+						me.renderSuggestion();
+					}
+					
+				};
+				
+				me.renderSuggestion = function(){
+				
+					// Rendering
+						// before rendering suggestion
+						// pop it from the stack
+						// then ask view to render poped item
+						// after poping stack, check if its length is less than 3, fetch new suggestions
+					
 					var newSuggestion = me.suggestionsStack.pop();
 					app.notify('add suggested contact', newSuggestion.getAll());
 					
-					// fill in contacts suggestions stack if nearly empty (<3 items)
 					if(me.suggestionsStack.length < 3) orm('suggestion').fetch({});
+				};
+				
+				me.itemHasExpired = function(id){
 					
-				}
+					// check if item has already be used
+					
+					if(me.expiredItems[id] == 'expired') {
+						return true;
+					} else {
+						me.expiredItems[id] = 'expired';
+						return false;
+					}
+					
+				};
 				
 			}
 		}

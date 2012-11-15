@@ -1,6 +1,6 @@
-				
-	<li class="divider-after rc pbn" data-user-id="{{suggestion.userId}}">
-		<div class="confirm-addition tac" style="display:none;">Demande envoy&eacute;e &agrave; {{suggestion.fullName}}</div>
+	
+	<li class="divider-after rc pbn" data-user-id="{{userId}}">
+		<div class="confirm-addition tac" style="display:none;">Demande envoy&eacute;e &agrave; {{fullName}}</div>
 		<div class="profile-container pam">
 			<div class="gr">
 				<div class="gu gu-4of5">
@@ -9,19 +9,19 @@
 						height="40" 
 						class="img avatar pointer" 
 						src="http://viadeo.github.com/tetra-ui/img/avatars/avatar-n-40x40.png" 
-						style="background-color:{{suggestion.color}};"
+						style="background-color:{{color}};"
 					/>
 					<span class="bd plm">
-						<h5 class="pbxs mbxs"><a href="/">{{suggestion.fullName}}</a></h5>
-						<p class="title pbxs mbxs">{{suggestion.headline}}</p>
-						<a class="btn btn-primary add-to-contact" title="Add to my contacts" data-user-id="{{suggestion.userId}}">
+						<h5 class="pbxs mbxs"><a href="/">{{fullName}}</a></h5>
+						<p class="title pbxs mbxs">{{headline}}</p>
+						<a class="btn btn-primary add-to-contact" title="Add to my contacts" data-user-id="{{userId}}">
 							<span>Ajouter &agrave; mes contacts</span>
 						</a>
 					</span>
 				</div>
 				<div class="gu gu-last tar">
 					<span class="tooltip tooltip-right">
-						<i class="vicon pointer remove-from-suggestion" data-user-id="{{suggestion.userId}}">&times;</i>
+						<i class="vicon pointer remove-from-suggestion" data-user-id="{{userId}}">&times;</i>
 						<span class="tooltip-content">Ne plus proposer</span>
 					</span>
 				</div>
